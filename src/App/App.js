@@ -12,3 +12,7 @@ const App = () => {
 };
 
 export default App;
+
+// need to get this attached to the back end somehow.
+// search by address id, if nothing is there then return that nothing is there and invite someone to make a new review.
+// maybe you can even ping a google api or something and get a photo of the house, or just put it on a map. cool.
