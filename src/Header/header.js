@@ -4,8 +4,8 @@ import { getInit } from '../util/helpers';
 const Header = () => {
   const facebookLogin = () => {
     console.log('heeeloo');
-    fetch('/auth/facebook/', getInit)
-      .then(res => res.json());
+    fetch('/auth/facebook/', getInit);
+    // .then(res => res.json());
   };
 
   return (

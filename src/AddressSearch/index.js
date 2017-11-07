@@ -1,25 +1,7 @@
 import React from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import './AddressSearch.css';
-import { postInit } from '../util/helpers';
-
-const searchForHome = async (result) => {
-  const latLng = await getLatLng(result);
-  const home = {
-    displayAddress: result.formatted_address,
-    id: result.place_id,
-    addressComponent: result.address_components,
-    latLng,
-  };
-  if (result.types.indexOf('street_address') > -1) {
-    const headers = postInit(JSON.stringify(home));
-    fetch('/home/search', headers)
-      .then();
-    // .catch(err => handleError(err));
-  } else {
-    console.log('plz try an address');
-  }
-};
+import enhance from './container';
 
 class AddressSearch extends React.Component {
   constructor(props) {
@@ -34,11 +16,10 @@ class AddressSearch extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-
   handleFormSubmit(event) {
     event.preventDefault();
     geocodeByAddress(this.state.address)
-      .then(results => searchForHome(results[0]))
+      .then(results => this.props.searchForHome(results[0]))
       .catch(error => console.error('Error', error));
   }
 
@@ -108,4 +89,4 @@ class AddressSearch extends React.Component {
   }
 }
 
-export default AddressSearch;
+export default enhance(AddressSearch);

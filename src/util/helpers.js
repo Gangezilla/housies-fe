@@ -3,6 +3,7 @@ export const getInit = ({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   }),
+  mode: 'no-cors',
   method: 'GET',
   credentials: 'include',
 });
