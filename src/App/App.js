@@ -3,13 +3,49 @@ import logo from '../logo.svg';
 import './App.css';
 import Header from '../Header/header';
 import AddressSearch from '../AddressSearch';
+import ReviewModal from '../ReviewModal';
 
-const App = () => {
-  return [
-    <Header key="Header" />,
-    <AddressSearch key="AddressSearch" />,
-  ];
-};
+class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      isShowingReviewModal: true, // SHOULD BE FALSE
+      numberOfReviewsForCurrentProperty: 0,
+      currentHome: null,
+    };
+    this.showReviewModal = this.showReviewModal.bind(this);
+    this.updateCurrentHome = this.updateCurrentHome.bind(this);
+  }
+
+  showReviewModal(shouldShow) {
+    console.log(shouldShow);
+    this.setState({
+      isShowingReviewModal: shouldShow,
+    });
+  }
+
+  updateCurrentHome(home) {
+    this.setState({ currentHome: home });
+  }
+
+  render() {
+    return [
+      <Header key="Header" />,
+      <AddressSearch
+        key="AddressSearch"
+        showReviewModal={this.showReviewModal}
+        updateCurrentHome={this.updateCurrentHome}
+        currentHome={this.state.currentHome}
+      />,
+      this.state.isShowingReviewModal &&
+      <ReviewModal
+        key="ReviewModal"
+        currentHome={this.state.currentHome}
+      />,
+    ];
+  }
+}
 
 export default App;
 
