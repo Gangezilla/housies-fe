@@ -4,22 +4,30 @@ import './App.css';
 import Header from '../Header/header';
 import AddressSearch from '../AddressSearch';
 import ReviewModal from '../ReviewModal';
+import Loader from '../Loader';
 
 class App extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      isShowingReviewModal: true, // SHOULD BE FALSE
+      isShowingReviewModal: true, // SHOULD BE FALSE, only true for testing.
       numberOfReviewsForCurrentProperty: 0,
       currentHome: null,
+      isShowingLoader: false,
     };
     this.showReviewModal = this.showReviewModal.bind(this);
     this.updateCurrentHome = this.updateCurrentHome.bind(this);
+    this.showLoader = this.showLoader.bind(this);
+  }
+
+  showLoader(shouldShow) {
+    this.setState({
+      isShowingLoader: shouldShow,
+    });
   }
 
   showReviewModal(shouldShow) {
-    console.log(shouldShow);
     this.setState({
       isShowingReviewModal: shouldShow,
     });
@@ -32,6 +40,7 @@ class App extends React.Component {
   render() {
     return [
       <Header key="Header" />,
+      this.state.isShowingLoader && <Loader key="loader" isShowingLoader={this.state.isShowingLoader} />,
       <AddressSearch
         key="AddressSearch"
         showReviewModal={this.showReviewModal}
@@ -42,6 +51,7 @@ class App extends React.Component {
       <ReviewModal
         key="ReviewModal"
         currentHome={this.state.currentHome}
+        showLoader={this.showLoader}
       />,
     ];
   }
