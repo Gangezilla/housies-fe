@@ -5,6 +5,7 @@ import { postInit } from '../util/helpers';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
+  withState('notLoggedIn', 'showNotLoggedIn', false),
 );
 
 const InnerForm = ({
@@ -16,10 +17,12 @@ const InnerForm = ({
   handleSubmit,
   isSubmitting,
   formError,
+  notLoggedIn,
 }) => {
   return (
     <Form onSubmit={handleSubmit}>
       {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
+      {notLoggedIn && <div>Please log in then try again.</div>}
       <label htmlFor="Title">Title</label>
       <Field
         name="title"
@@ -124,8 +127,19 @@ const ReviewModal = withFormik({
     props.showLoader(true);
     const headers = postInit(JSON.stringify(values));
     fetch('/home/review/', headers)
-      .then(res => res.json())
-      .catch(() => {
+      .then((res) => {
+        props.showLoader(false);
+        setSubmitting(false);
+        if (res.status === 401) {
+          props.showNotLoggedIn(true);
+        } else if (res.status !== 200) { // eslint-disable-line 
+          props.showFormError(true);
+        } else {
+          console.log('it worked!');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         props.showFormError(true);
         props.showLoader(false);
         setSubmitting(false);

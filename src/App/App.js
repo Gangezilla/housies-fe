@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import Header from '../Header/header';
+import Header from '../Header';
 import AddressSearch from '../AddressSearch';
 import ReviewModal from '../ReviewModal';
 import Loader from '../Loader';
+import { getInit } from '../util/helpers';
 
 class App extends React.Component {
 
@@ -14,10 +15,35 @@ class App extends React.Component {
       numberOfReviewsForCurrentProperty: 0,
       currentHome: null,
       isShowingLoader: false,
+      user: null,
     };
     this.showReviewModal = this.showReviewModal.bind(this);
     this.updateCurrentHome = this.updateCurrentHome.bind(this);
     this.showLoader = this.showLoader.bind(this);
+    this.updateLoggedInUser = this.updateLoggedInUser.bind(this);
+  }
+
+  componentWillMount() {
+    this.checkIfUserIsLoggedIn();
+  }
+
+  checkIfUserIsLoggedIn() {
+    fetch('/auth/check/', getInit)
+      .then(((res) => {
+        if (res.status === 200) {
+          return res.json();
+        }
+        return null;
+      }
+      ))
+      .then(user => this.updateLoggedInUser(user));
+  }
+
+  updateLoggedInUser(user) {
+    this.setState({
+      user,
+    });
+    // gets triggered after a call to facebook, also on comp did mount to see if we're logged in or not.
   }
 
   showLoader(shouldShow) {
@@ -37,9 +63,18 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return [
-      <Header key="Header" />,
-      this.state.isShowingLoader && <Loader key="loader" isShowingLoader={this.state.isShowingLoader} />,
+      <Header
+        key="Header"
+        user={this.state.user}
+        updateLoggedInUser={this.updateLoggedInUser}
+        showLoader={this.showLoader}
+      />,
+      this.state.isShowingLoader && <Loader
+        key="loader"
+        isShowingLoader={this.state.isShowingLoader}
+      />,
       <AddressSearch
         key="AddressSearch"
         showReviewModal={this.showReviewModal}
