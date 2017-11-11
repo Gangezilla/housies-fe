@@ -1,5 +1,11 @@
+import { compose, withState } from 'recompose';
 import React from 'react';
 import { withFormik, Form, Field } from 'formik';
+import { postInit } from '../util/helpers';
+
+const enhance = compose(
+  withState('formError', 'showFormError', false),
+);
 
 const InnerForm = ({
   values,
@@ -9,9 +15,11 @@ const InnerForm = ({
   handleBlur,
   handleSubmit,
   isSubmitting,
+  formError,
 }) => {
   return (
     <Form onSubmit={handleSubmit}>
+      {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
       <label htmlFor="Title">Title</label>
       <Field
         name="title"
@@ -110,16 +118,22 @@ const ReviewModal = withFormik({
     {
       props,
       setSubmitting,
-      setErrors /* setValues, setStatus, and other goodies */,
     },
   ) => {
     setSubmitting(true);
     props.showLoader(true);
-    console.log('cool', values);
+    const headers = postInit(JSON.stringify(values));
+    fetch('/home/review/', headers)
+      .then(res => res.json())
+      .catch(() => {
+        props.showFormError(true);
+        props.showLoader(false);
+        setSubmitting(false);
+      });
   },
 })(InnerForm);
 
-export default ReviewModal;
+export default enhance(ReviewModal);
 
 // so we need to submit the form, if something goes wrong, tell them to try again.
 // on back end, take the data, insert it into db, and then send back success or failure.

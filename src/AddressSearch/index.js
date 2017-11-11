@@ -27,6 +27,11 @@ class AddressSearch extends React.Component {
     }
   }
 
+  handleError(err) {
+    console.error('error', err);
+    console.log('state', this.state);
+  }
+
   async searchForHome(result) {
     const latLng = await getLatLng(result);
     const home = {
@@ -37,14 +42,14 @@ class AddressSearch extends React.Component {
     };
     if (result.types.indexOf('street_address') > -1) {
       const headers = postInit(JSON.stringify(home));
-      const testHome = {
-        reviewCount: 0,
-      };
-      this.handleHomeResponse(testHome);
-      // fetch('/home/search', headers)
-      //   .then(res => res.json())
-      //   .then(homeResponse => this.handleHomeResponse(homeResponse));
-      // .catch(err => handleError(err));
+      // const testHome = {
+      //   reviewCount: 0,
+      // };
+      // this.handleHomeResponse(testHome);
+      fetch('/home/search', headers)
+        .then(res => res.json())
+        .then(homeResponse => this.handleHomeResponse(homeResponse))
+        .catch(err => this.handleError(err));
     } else {
       console.log('plz try an address');
     }
@@ -71,9 +76,7 @@ class AddressSearch extends React.Component {
           loading: false,
         });
       })
-      .catch((error) => {
-        // error => handleError(error);
-      });
+      .catch(error => this.handleError(error));
   }
 
   handleChange(address) {
