@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getInit } from '../util/helpers';
+import Avatar from '../Avatar';
 
 const Header = ({
   user,
@@ -22,10 +23,22 @@ const Header = ({
       .then(json => updateLoggedInUser(json));
   };
 
+  const avatarOrLogin = () => {
+    if (user) {
+      return (
+        <Avatar
+          user={user}
+        />
+      );
+    }
+    return (
+      <button onClick={facebookLogin}> Log in to Facebook </button>
+    );
+  };
+
   return (
     <div className="header">
-      <button onClick={facebookLogin}> Log in to Facebook </button>
-      <span> {JSON.stringify(user)} </span>
+      {avatarOrLogin(user)}
     </div>
   );
 };

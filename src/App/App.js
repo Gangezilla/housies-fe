@@ -14,11 +14,13 @@ class App extends React.Component {
     super();
     this.state = {
       isShowingReviewModal: true, // SHOULD BE FALSE, only true for testing.
-      numberOfReviewsForCurrentProperty: 0,
       currentHome: null,
       isShowingLoader: false,
       user: null,
-      reviews: [],
+      reviews: {
+        reviewCount: 0,
+        reviews: [],
+      },
       errors: [],
       currentLocation: {
         latitude: null,
@@ -120,7 +122,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    console.log('wubbalubbadubdub', this.state);
     return [
       <Header
         key="Header"
@@ -159,11 +161,13 @@ class App extends React.Component {
         createVisibleError={this.createVisibleError}
         removeVisibleError={this.removeVisibleError}
         checkIfLoggedIn={this.checkIfLoggedIn}
+        showReviewModal={this.showReviewModal}
       />,
-      this.state.reviews.length > 0 &&
+      this.state.reviews.reviews.length > 0 &&
       <Reviews
         key="Reviews"
         reviews={this.state.reviews}
+        showReviewModal={this.showReviewModal}
       />,
     ];
   }

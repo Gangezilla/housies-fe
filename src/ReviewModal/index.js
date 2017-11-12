@@ -19,8 +19,14 @@ const InnerForm = ({
   isSubmitting,
   formError,
   notLoggedIn,
+  showReviewModal,
 }) => {
-  return (
+  return [
+    <button
+      onClick={() => showReviewModal(false)}
+    >
+    XXX CLOSE ME XXX
+    </button>,
     <Form onSubmit={handleSubmit}>
       {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
       {notLoggedIn && <div>Please log in then try again.</div>}
@@ -102,8 +108,8 @@ const InnerForm = ({
       <button type="submit" disabled={isSubmitting}>
     Submit
       </button>
-    </Form>
-  );
+    </Form>,
+  ];
 };
 
 const ReviewModal = withFormik({
