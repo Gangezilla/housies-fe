@@ -158,6 +158,7 @@ class App extends React.Component {
         showLoader={this.showLoader}
         createVisibleError={this.createVisibleError}
         removeVisibleError={this.removeVisibleError}
+        checkIfLoggedIn={this.checkIfLoggedIn}
       />,
       this.state.reviews.length > 0 &&
       <Reviews

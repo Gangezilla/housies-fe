@@ -6,6 +6,7 @@ import { postInit } from '../util/helpers';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
+  withState('notLoggedIn', 'showNotLoggedIn', false),
 );
 
 const InnerForm = ({
@@ -17,6 +18,7 @@ const InnerForm = ({
   handleSubmit,
   isSubmitting,
   formError,
+  notLoggedIn,
 }) => {
   return (
     <Form onSubmit={handleSubmit}>
