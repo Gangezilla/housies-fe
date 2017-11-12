@@ -6,7 +6,6 @@ import { postInit } from '../util/helpers';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
-  withState('notLoggedIn', 'showNotLoggedIn', false),
 );
 
 const InnerForm = ({
@@ -18,7 +17,6 @@ const InnerForm = ({
   handleSubmit,
   isSubmitting,
   formError,
-  notLoggedIn,
 }) => {
   return (
     <Form onSubmit={handleSubmit}>
@@ -132,7 +130,7 @@ const ReviewModal = withFormik({
         props.showLoader(false);
         setSubmitting(false);
         if (res.status === 401) {
-          props.showNotLoggedIn(true);
+          props.createVisibleError('Please log in with Facebook first.');
         } else if (res.status !== 200) { // eslint-disable-line 
           props.showFormError(true);
         } else {
@@ -153,6 +151,7 @@ ReviewModal.propTypes = {
 
   }),
   showLoader: PropTypes.func.isRequired,
+  createVisibleError: PropTypes.func.isRequired,
 };
 
 ReviewModal.defaultProps = {

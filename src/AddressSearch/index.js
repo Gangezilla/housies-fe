@@ -10,7 +10,6 @@ class AddressSearch extends React.Component {
     this.state = {
       address: '',
       geocodeResults: null,
-      loading: false,
       isShowingAlertBox: false,
     };
     this.handleSelect = this.handleSelect.bind(this);
@@ -34,6 +33,7 @@ class AddressSearch extends React.Component {
   }
 
   async searchForHome(result) {
+    const addressError = 'Please try an address, not a country or anything like that';
     const latLng = await getLatLng(result);
     const home = {
       displayAddress: result.formatted_address,
@@ -42,13 +42,16 @@ class AddressSearch extends React.Component {
       latLng,
     };
     if (result.types.indexOf('street_address') > -1) {
+      this.props.removeVisibleError(addressError);
+      this.props.showLoader(true);
       const headers = postInit(JSON.stringify(home));
       fetch('/home/search', headers)
         .then(res => res.json())
         .then(homeResponse => this.handleHomeResponse(homeResponse))
+        .then(() => this.props.showLoader(false))
         .catch(err => this.handleError(err));
     } else {
-      console.log('plz try an address');
+      this.props.createVisibleError(addressError);
     }
   }
 
@@ -62,7 +65,6 @@ class AddressSearch extends React.Component {
   handleSelect(address) {
     this.setState({
       address,
-      loading: true,
     });
 
     geocodeByAddress(address)
@@ -83,10 +85,22 @@ class AddressSearch extends React.Component {
     });
   }
 
+  // THIS IS GROSS, REFACTOR IT.
   handleAlertAction(choice) {
-    this.props.showReviewModal(choice);
-    this.setState({ isShowingAlertBox: false });
+    const fbError = 'Please log in with Facebook first.';
+    if (choice === true) {
+      if (this.props.checkIfLoggedIn()) {
+        this.props.showReviewModal(choice);
+        this.props.removeVisibleError(fbError);
+        this.setState({ isShowingAlertBox: false });
+      } else {
+        this.props.createVisibleError(fbError);
+      }
+    } else if (choice === false) {
+      this.setState({ isShowingAlertBox: false });
+    }
   }
+  // THIS IS GROSS, REFACTOR IT. ^^^
 
   render() {
     const cssClasses = {
@@ -153,20 +167,15 @@ class AddressSearch extends React.Component {
 AddressSearch.propTypes = {
   showReviewModal: PropTypes.func.isRequired,
   updateCurrentHome: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    id: PropTypes.string,
-    email: PropTypes.string,
-    locale: PropTypes.string,
-    firstname: PropTypes.string,
-    lastname: PropTypes.string,
-    profilepic: PropTypes.string,
-  }),
   updateCurrentReviews: PropTypes.func.isRequired,
   currentLocation: PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number,
   }),
-
+  showLoader: PropTypes.func.isRequired,
+  checkIfLoggedIn: PropTypes.func.isRequired,
+  createVisibleError: PropTypes.func.isRequired,
+  removeVisibleError: PropTypes.func.isRequired,
 };
 
 AddressSearch.defaultProps = {

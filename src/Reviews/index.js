@@ -5,7 +5,9 @@ const Review = review => (
   <span>individual review</span>
 );
 
-const Reviews = reviews => (
+const Reviews = ({
+  reviews,
+}) => (
   <div>
     <span> Reviews </span>
     {reviews.map(review => (

@@ -6,9 +6,11 @@ const Header = ({
   user,
   updateLoggedInUser,
   showLoader,
+  removeVisibleError,
 }) => {
   const facebookLogin = () => {
     showLoader(true);
+    removeVisibleError('Please log in with Facebook first.');
     fetch('/auth/facebook/', getInit)
       .then((res) => {
         showLoader(false);

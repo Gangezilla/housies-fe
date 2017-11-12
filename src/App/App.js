@@ -5,6 +5,7 @@ import AddressSearch from '../AddressSearch';
 import ReviewModal from '../ReviewModal';
 import Loader from '../Loader';
 import Reviews from '../Reviews';
+import Errors from '../Errors';
 import { getInit } from '../util/helpers';
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
       isShowingLoader: false,
       user: null,
       reviews: [],
+      errors: [],
       currentLocation: {
         latitude: null,
         longitude: null,
@@ -27,11 +29,14 @@ class App extends React.Component {
     this.updateCurrentHome = this.updateCurrentHome.bind(this);
     this.showLoader = this.showLoader.bind(this);
     this.updateLoggedInUser = this.updateLoggedInUser.bind(this);
-    this.updateCurrentReviews.bind(this);
+    this.updateCurrentReviews = this.updateCurrentReviews.bind(this);
+    this.checkIfLoggedIn = this.checkIfLoggedIn.bind(this);
+    this.createVisibleError = this.createVisibleError.bind(this);
+    this.removeVisibleError = this.removeVisibleError.bind(this);
   }
 
   componentWillMount() {
-    this.checkIfUserIsLoggedIn();
+    this.retrieveLoggedInUser();
   }
 
   componentDidMount() {
@@ -50,7 +55,7 @@ class App extends React.Component {
     }
   }
 
-  checkIfUserIsLoggedIn() {
+  retrieveLoggedInUser() {
     fetch('/auth/check/', getInit)
       .then(((res) => {
         if (res.status === 200) {
@@ -90,27 +95,60 @@ class App extends React.Component {
     });
   }
 
+  checkIfLoggedIn() {
+    if (this.state.user) {
+      return true;
+    } return false;
+  }
+
+  createVisibleError(error) {
+    const errors = this.state.errors.slice(0);
+    const index = errors.indexOf(error);
+    if (index !== -1) {
+      errors.push(error);
+      this.setState({ errors });
+    }
+  }
+
+  removeVisibleError(error) {
+    const errors = this.state.errors.slice(0);
+    const index = errors.indexOf(error);
+    if (index > -1) {
+      errors.splice(index, 1);
+      this.setState({ errors });
+    }
+  }
+
   render() {
+    console.log(this.state);
     return [
       <Header
         key="Header"
         user={this.state.user}
         updateLoggedInUser={this.updateLoggedInUser}
         showLoader={this.showLoader}
+        removeVisibleError={this.removeVisibleError}
       />,
       this.state.isShowingLoader &&
       <Loader
         key="loader"
-        isShowingLoader={this.state.isShowingLoader}
+      />,
+      this.state.errors.length > 0 &&
+      <Errors
+        key="Errors"
+        errors={this.state.errors}
       />,
       <AddressSearch
         key="AddressSearch"
         showReviewModal={this.showReviewModal}
         updateCurrentHome={this.updateCurrentHome}
         currentHome={this.state.currentHome}
-        user={this.state.user}
         updateCurrentReviews={this.updateCurrentReviews}
         currentLocation={this.state.currentLocation}
+        showLoader={this.showLoader}
+        checkIfLoggedIn={this.checkIfLoggedIn}
+        createVisibleError={this.createVisibleError}
+        removeVisibleError={this.removeVisibleError}
       />,
       this.state.isShowingReviewModal &&
       this.state.user &&
@@ -118,6 +156,8 @@ class App extends React.Component {
         key="ReviewModal"
         currentHome={this.state.currentHome}
         showLoader={this.showLoader}
+        createVisibleError={this.createVisibleError}
+        removeVisibleError={this.removeVisibleError}
       />,
       this.state.reviews.length > 0 &&
       <Reviews
