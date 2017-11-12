@@ -104,7 +104,7 @@ class App extends React.Component {
   createVisibleError(error) {
     const errors = this.state.errors.slice(0);
     const index = errors.indexOf(error);
-    if (index !== -1) {
+    if (index === -1) {
       errors.push(error);
       this.setState({ errors });
     }

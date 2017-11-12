@@ -116,7 +116,6 @@ const ReviewModal = withFormik({
     }
     return errors;
   },
-  // Submission handler
   handleSubmit: (
     values,
     {
@@ -126,7 +125,12 @@ const ReviewModal = withFormik({
   ) => {
     setSubmitting(true);
     props.showLoader(true);
-    const headers = postInit(JSON.stringify(values));
+    const home = props.currentHome;
+    const payload = Object.assign({}, {
+      values,
+      home,
+    });
+    const headers = postInit(JSON.stringify(payload));
     fetch('/home/review/', headers)
       .then((res) => {
         props.showLoader(false);

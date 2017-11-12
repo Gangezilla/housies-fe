@@ -17,13 +17,12 @@ class AddressSearch extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
-  handleHomeResponse(home) {
-    this.props.updateCurrentHome(home);
-    console.log(home);
-    if (home.reviewCount === 0) {
+  handleReviewResponse(reviews) {
+    this.props.updateCurrentReviews(reviews);
+    if (reviews.reviewCount === 0) {
       this.setState({ isShowingAlertBox: true });
     } else {
-      this.props.updateCurrentReviews(home.reviews);
+      this.props.updateCurrentReviews(reviews);
     }
   }
 
@@ -45,9 +44,10 @@ class AddressSearch extends React.Component {
       this.props.removeVisibleError(addressError);
       this.props.showLoader(true);
       const headers = postInit(JSON.stringify(home));
+      this.props.updateCurrentHome(home);
       fetch('/home/search', headers)
         .then(res => res.json())
-        .then(homeResponse => this.handleHomeResponse(homeResponse))
+        .then(reviewResponse => this.handleReviewResponse(reviewResponse))
         .then(() => this.props.showLoader(false))
         .catch(err => this.handleError(err));
     } else {
@@ -96,7 +96,7 @@ class AddressSearch extends React.Component {
       } else {
         this.props.createVisibleError(fbError);
       }
-    } else if (choice === false) {
+    } else {
       this.setState({ isShowingAlertBox: false });
     }
   }
