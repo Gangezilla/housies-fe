@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getInit } from '../util/helpers';
 
 const Header = ({
@@ -25,6 +26,23 @@ const Header = ({
       <span> {JSON.stringify(user)} </span>
     </div>
   );
+};
+
+Header.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    email: PropTypes.string,
+    locale: PropTypes.string,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    profilepic: PropTypes.string,
+  }),
+  updateLoggedInUser: PropTypes.func.isRequired,
+  showLoader: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  user: null,
 };
 
 export default Header;

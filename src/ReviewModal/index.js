@@ -1,6 +1,7 @@
 import { compose, withState } from 'recompose';
 import React from 'react';
 import { withFormik, Form, Field } from 'formik';
+import PropTypes from 'prop-types';
 import { postInit } from '../util/helpers';
 
 const enhance = compose(
@@ -146,6 +147,17 @@ const ReviewModal = withFormik({
       });
   },
 })(InnerForm);
+
+ReviewModal.propTypes = {
+  currentHome: PropTypes.shape({
+
+  }),
+  showLoader: PropTypes.func.isRequired,
+};
+
+ReviewModal.defaultProps = {
+  currentHome: null,
+};
 
 export default enhance(ReviewModal);
 

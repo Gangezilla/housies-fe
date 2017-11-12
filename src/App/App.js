@@ -66,7 +66,6 @@ class App extends React.Component {
     this.setState({
       user,
     });
-    // gets triggered after a call to facebook, also on comp did mount to see if we're logged in or not.
   }
 
   showLoader(shouldShow) {
@@ -92,7 +91,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return [
       <Header
         key="Header"

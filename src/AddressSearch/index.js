@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import './AddressSearch.css';
 import { postInit } from '../util/helpers';
@@ -148,5 +149,29 @@ class AddressSearch extends React.Component {
     );
   }
 }
+
+AddressSearch.propTypes = {
+  showReviewModal: PropTypes.func.isRequired,
+  updateCurrentHome: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    email: PropTypes.string,
+    locale: PropTypes.string,
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+    profilepic: PropTypes.string,
+  }),
+  updateCurrentReviews: PropTypes.func.isRequired,
+  currentLocation: PropTypes.shape({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+  }),
+
+};
+
+AddressSearch.defaultProps = {
+  user: null,
+  currentLocation: null,
+};
 
 export default AddressSearch;
