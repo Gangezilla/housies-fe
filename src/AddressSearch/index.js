@@ -23,7 +23,7 @@ class AddressSearch extends React.Component {
     if (home.reviewCount === 0) {
       this.setState({ isShowingAlertBox: true });
     } else {
-      console.log(home.reviews);
+      this.props.updateCurrentReviews(home.reviews);
     }
   }
 
@@ -42,10 +42,6 @@ class AddressSearch extends React.Component {
     };
     if (result.types.indexOf('street_address') > -1) {
       const headers = postInit(JSON.stringify(home));
-      // const testHome = {
-      //   reviewCount: 0,
-      // };
-      // this.handleHomeResponse(testHome);
       fetch('/home/search', headers)
         .then(res => res.json())
         .then(homeResponse => this.handleHomeResponse(homeResponse))
@@ -128,10 +124,17 @@ class AddressSearch extends React.Component {
       id: 'AddressSearch-id',
     };
 
+    const options = {
+      location: new google.maps.LatLng(this.props.currentLocation.latitude, this.props.currentLocation.longitude), // eslint-disable-line
+      radius: 2000,
+      types: ['address'],
+    };
+
     return (
       <div>
         <form onSubmit={this.handleFormSubmit}>
           <PlacesAutocomplete
+            options={options}
             inputProps={inputProps}
             classNames={cssClasses}
             onEnterKeyDown={this.handleSelect}

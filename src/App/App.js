@@ -4,6 +4,7 @@ import Header from '../Header';
 import AddressSearch from '../AddressSearch';
 import ReviewModal from '../ReviewModal';
 import Loader from '../Loader';
+import Reviews from '../Reviews';
 import { getInit } from '../util/helpers';
 
 class App extends React.Component {
@@ -16,15 +17,37 @@ class App extends React.Component {
       currentHome: null,
       isShowingLoader: false,
       user: null,
+      reviews: [],
+      currentLocation: {
+        latitude: null,
+        longitude: null,
+      },
     };
     this.showReviewModal = this.showReviewModal.bind(this);
     this.updateCurrentHome = this.updateCurrentHome.bind(this);
     this.showLoader = this.showLoader.bind(this);
     this.updateLoggedInUser = this.updateLoggedInUser.bind(this);
+    this.updateCurrentReviews.bind(this);
   }
 
   componentWillMount() {
     this.checkIfUserIsLoggedIn();
+  }
+
+  componentDidMount() {
+    this.getUsersCurrentLocation();
+  }
+
+  getUsersCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        this.setState({ currentLocation });
+      });
+    }
   }
 
   checkIfUserIsLoggedIn() {
@@ -62,6 +85,12 @@ class App extends React.Component {
     this.setState({ currentHome: home });
   }
 
+  updateCurrentReviews(reviews) {
+    this.setState({
+      reviews,
+    });
+  }
+
   render() {
     console.log(this.state);
     return [
@@ -71,7 +100,8 @@ class App extends React.Component {
         updateLoggedInUser={this.updateLoggedInUser}
         showLoader={this.showLoader}
       />,
-      this.state.isShowingLoader && <Loader
+      this.state.isShowingLoader &&
+      <Loader
         key="loader"
         isShowingLoader={this.state.isShowingLoader}
       />,
@@ -80,12 +110,21 @@ class App extends React.Component {
         showReviewModal={this.showReviewModal}
         updateCurrentHome={this.updateCurrentHome}
         currentHome={this.state.currentHome}
+        user={this.state.user}
+        updateCurrentReviews={this.updateCurrentReviews}
+        currentLocation={this.state.currentLocation}
       />,
       this.state.isShowingReviewModal &&
+      this.state.user &&
       <ReviewModal
         key="ReviewModal"
         currentHome={this.state.currentHome}
         showLoader={this.showLoader}
+      />,
+      this.state.reviews.length > 0 &&
+      <Reviews
+        key="Reviews"
+        reviews={this.state.reviews}
       />,
     ];
   }
@@ -93,6 +132,4 @@ class App extends React.Component {
 
 export default App;
 
-// need to get this attached to the back end somehow.
-// search by address id, if nothing is there then return that nothing is there and invite someone to make a new review.
 // maybe you can even ping a google api or something and get a photo of the house, or just put it on a map. cool.
