@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { getInit } from '../util/helpers';
-import Avatar from '../Avatar';
+import Housies from './housies.png';
 
 const Header = ({
   user,
@@ -27,19 +28,55 @@ const Header = ({
     if (user) {
       return (
         <Avatar
-          user={user}
+          alt={`${user.firstName} ${user.lastName}'s profile`}
+          src={user.profilePic || user.profilepic}
         />
       );
     }
     return (
-      <button onClick={facebookLogin}> Log in to Facebook </button>
+      <Login onClick={facebookLogin}> Log in with Facebook </Login>
     );
   };
 
+  // background-color should transition from white to light green #87BF5E (maybe) on scroll.
+  const Container = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: white;
+    justify-content: space-around;
+    height: 60px;
+  `;
+
+  const Avatar = styled.img`
+    border-radius: 50%;
+  `;
+
+  const Login = styled.button`
+    border-color: #FDECC4;
+    background-color: #FFFFFF;
+    border-style: solid;
+    padding: 5px;
+    height: 40px;
+  `;
+
+  const Logo = styled.div`
+    background: url(${Housies});
+    height: 55px;
+    width: 55px;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 55px;
+  `;
+
+  const Heading = styled.h3`
+  `;
+
   return (
-    <div className="header">
+    <Container>
+      <Logo alt="Housies" />
+      <Heading> Housies </Heading>
       {avatarOrLogin(user)}
-    </div>
+    </Container>
   );
 };
 
