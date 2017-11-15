@@ -1,19 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+// reviewId text, //
+// homeId text, // 
+// title text, 
+// description text,
+// rating int,
+// tips text
+// memberId text // 
+// firstName
+// lastName
+// profilePic
 
 const Review = (review) => {
-  console.log('indiv review', review);
-  return [
-    <span>individual review</span>,
-    <p> {JSON.stringify(review)} </p>,
-  ];
+  const ReviewContainer = styled.div`
+  `;
+
+  return (
+    <ReviewContainer>
+      <div>
+        <span>{review.title}</span>
+        <span>{review.rating}</span>
+      </div>
+      <div>
+        <div>
+          <h4>Description</h4>
+          <p>{review.description}</p>
+        </div>
+        <div>
+          <h4>Tips</h4>
+          <p>{review.tips}</p>
+        </div>
+        <span>By {review.firstName} {review.lastName}</span>
+      </div>
+    </ReviewContainer>
+  );
 };
+
+const ReviewHeading = styled.h3`
+`;
+
+const ReviewsContainer = styled.div`
+`;
 
 const Reviews = ({
   reviews,
   showReviewModal,
 }) => {
-  console.log('all reviews', reviews);
   return (
     <div>
       <button
@@ -21,13 +55,17 @@ const Reviews = ({
       >
     Have you lived here before? Add another review.
       </button>
-      <span> {reviews.reviewCount} Reviews </span>
-      {reviews.reviews.map(review => (
-        Review(review)
-      ))}
+      <ReviewHeading> {reviews.reviewCount} Review{reviews.reviewCount > 1 ? 's' : ''} </ReviewHeading>
+      <ReviewsContainer>
+        {reviews.reviews.map(review => (
+          Review(review)
+        ))}
+      </ReviewsContainer>
     </div>
   );
 };
+
+// Big chunky font like Apple News. Striking.
 
 Reviews.propTypes = {
   reviews: PropTypes.shape({

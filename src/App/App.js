@@ -18,8 +18,18 @@ class App extends React.Component {
       isShowingLoader: false,
       user: null,
       reviews: {
-        reviewCount: 0,
-        reviews: [],
+        reviewCount: 1,
+        reviews: [{
+          reviewId: 1234,
+          homeId: 'test',
+          title: 'This is a short title.',
+          description: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. ',
+          rating: 3,
+          tips: 'These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. ',
+          firstName: 'Scott',
+          lastName: 'Gangemi',
+          profilePic: 'http://plachold.it/100x100',
+        }],
       },
       errors: [],
       currentLocation: {
@@ -122,7 +132,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('wubbalubbadubdub', this.state);
     return [
       <Header
         key="Header"

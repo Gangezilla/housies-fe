@@ -1,8 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import './AddressSearch.css';
 import { postInit } from '../util/helpers';
+import Button from '../Common/Button';
+
+const Container = styled.div`
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.16);
+`;
+
+const Form = styled.form`
+  width: 90%;
+  max-width: 800px;
+`;
+
+const SubmitButton = Button.extend`
+  display: block;
+  margin: 20px auto 0;
+`;
 
 class AddressSearch extends React.Component {
   constructor(props) {
@@ -26,11 +47,6 @@ class AddressSearch extends React.Component {
     }
   }
 
-  handleError(err) {
-    console.error('error', err);
-    console.log('state', this.state);
-  }
-
   async searchForHome(result) {
     const addressError = 'Please try an address, not a country or anything like that';
     const latLng = await getLatLng(result);
@@ -49,7 +65,7 @@ class AddressSearch extends React.Component {
         .then(res => res.json())
         .then(reviewResponse => this.handleReviewResponse(reviewResponse))
         .then(() => this.props.showLoader(false))
-        .catch(err => this.handleError(err));
+        .catch(err => this.createVisibleError('Sorry, something went wrong. Can you try again?', err));
     } else {
       this.props.createVisibleError(addressError);
     }
@@ -59,7 +75,7 @@ class AddressSearch extends React.Component {
     event.preventDefault();
     geocodeByAddress(this.state.address)
       .then(results => this.searchForHome(results[0]))
-      .catch(error => console.error('Error', error));
+      .catch(err => this.createVisibleError('Sorry, something went wrong. Can you try again?', err));
   }
 
   handleSelect(address) {
@@ -75,7 +91,7 @@ class AddressSearch extends React.Component {
           loading: false,
         });
       })
-      .catch(error => this.handleError(error));
+      .catch(error => this.props.createVisibleError('Sorry, something went wrong. Can you try again?', error));
   }
 
   handleChange(address) {
@@ -146,8 +162,8 @@ class AddressSearch extends React.Component {
     };
 
     return (
-      <div>
-        <form onSubmit={this.handleFormSubmit}>
+      <Container>
+        <Form onSubmit={this.handleFormSubmit}>
           <PlacesAutocomplete
             options={options}
             inputProps={inputProps}
@@ -156,10 +172,10 @@ class AddressSearch extends React.Component {
             onSelect={this.handleSelect}
             autocompleteItem={AutocompleteItem}
           />
-          <button type="submit">Submit</button>
-        </form>
+          <SubmitButton type="submit">Search</SubmitButton>
+        </Form>
         {this.state.isShowingAlertBox && AlertBox()}
-      </div>
+      </Container>
     );
   }
 }

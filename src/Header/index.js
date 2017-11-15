@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { getInit } from '../util/helpers';
 import Housies from './housies.png';
+import Button from '../Common/Button';
 
 const Header = ({
   user,
@@ -34,7 +35,7 @@ const Header = ({
       );
     }
     return (
-      <Login onClick={facebookLogin}> Log in with Facebook </Login>
+      <Button onClick={facebookLogin}> facebook login </Button>
     );
   };
 
@@ -45,18 +46,12 @@ const Header = ({
     background-color: white;
     justify-content: space-around;
     height: 60px;
+    max-width: 800px;
+    margin: 0 auto;
   `;
 
   const Avatar = styled.img`
     border-radius: 50%;
-  `;
-
-  const Login = styled.button`
-    border-color: #FDECC4;
-    background-color: #FFFFFF;
-    border-style: solid;
-    padding: 5px;
-    height: 40px;
   `;
 
   const Logo = styled.div`
