@@ -150,7 +150,6 @@ const ReviewModal = withFormik({
         }
       })
       .catch((err) => {
-        console.log(err);
         props.showFormError(true);
         props.showLoader(false);
         setSubmitting(false);

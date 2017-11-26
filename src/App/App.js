@@ -6,6 +6,7 @@ import ReviewModal from '../ReviewModal';
 import Loader from '../Loader';
 import Reviews from '../Reviews';
 import Errors from '../Errors';
+import Footer from '../Footer';
 import { getInit } from '../util/helpers';
 
 class App extends React.Component {
@@ -177,6 +178,9 @@ class App extends React.Component {
         key="Reviews"
         reviews={this.state.reviews}
         showReviewModal={this.showReviewModal}
+      />,
+      <Footer
+        key="Footer"
       />,
     ];
   }
