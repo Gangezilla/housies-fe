@@ -7,12 +7,13 @@ import { postInit } from '../util/helpers';
 import Button from '../Common/Button';
 
 const Container = styled.div`
-  height: 250px;
+  min-height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 20px 0;
   box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.16);
+  flex-direction: column;
 `;
 
 const Form = styled.form`
@@ -31,7 +32,7 @@ class AddressSearch extends React.Component {
     this.state = {
       address: '',
       geocodeResults: null,
-      isShowingAlertBox: false,
+      isShowingAlertBox: true,
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -125,6 +126,20 @@ class AddressSearch extends React.Component {
       autocompleteContainer: 'AddressSearch__autocomplete-container',
     };
 
+    const AlertBoxContainer = styled.div`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    `;
+
+    const ButtonContainer = styled.div`
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      margin-top: 15px;
+    `;
+
     const AutocompleteItem = ({ formattedSuggestion }) => (
       <div className="AddressSearch__suggestion-item">
         <strong>{formattedSuggestion.mainText}</strong>{' '}
@@ -132,15 +147,17 @@ class AddressSearch extends React.Component {
       </div>);
 
     const AlertBox = () => (
-      <div className="alert-box">
+      <AlertBoxContainer>
         <span> We don‘t have any reviews for that home yet. Would you like to write our first? </span>
-        <button onClick={() => this.handleAlertAction(true)}>
+        <ButtonContainer>
+          <Button onClick={() => this.handleAlertAction(true)}>
           Sure
-        </button>
-        <button onClick={() => this.handleAlertAction(false)}>
+          </Button>
+          <Button onClick={() => this.handleAlertAction(false)}>
           No thanks.
-        </button>
-      </div>
+          </Button>
+        </ButtonContainer>
+      </AlertBoxContainer>
     );
 
     const inputProps = {

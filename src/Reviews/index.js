@@ -15,11 +15,13 @@ import Button from '../Common/Button';
 // profilePic
 
 const Review = (review) => {
-  const ReviewContainer = styled.div`
+  const ReviewCard = styled.div`
     width: 90%;
     max-width: 800px;
     background: white;
     padding: 20px;
+    border: 1px solid grey;
+    border-radius: 5px;
   `;
 
   const HeadingContainer = styled.div`
@@ -33,7 +35,7 @@ const Review = (review) => {
   `;
 
   return (
-    <ReviewContainer key={review.title}>
+    <ReviewCard key={review.title}>
       <HeadingContainer>
         <span>{review.title}</span>
         <span>{review.rating}/5</span>
@@ -49,7 +51,7 @@ const Review = (review) => {
         </div>
         <span>{review.firstName} {review.lastName}</span>
       </div>
-    </ReviewContainer>
+    </ReviewCard>
   );
 };
 
