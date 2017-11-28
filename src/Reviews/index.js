@@ -20,8 +20,8 @@ const Review = (review) => {
     max-width: 800px;
     background: white;
     padding: 20px;
-    border: 1px solid grey;
     border-radius: 5px;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
   `;
 
   const HeadingContainer = styled.div`

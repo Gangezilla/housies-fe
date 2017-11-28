@@ -1,5 +1,8 @@
 - Style the 'we dont have any reviews yet' box.
 - Loader
 - Errors
-- Change gradient of button to babay blue.
 - Style the review modal.
+- Google Analytics i guess.
+
+- Fix removeVisibleError function
+- Add a cleanup job to errors.

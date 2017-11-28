@@ -35,7 +35,7 @@ const Header = ({
       );
     }
     return (
-      <Button onClick={facebookLogin}> facebook login </Button>
+      <Button onClick={facebookLogin}> Facebook Login </Button>
     );
   };
 

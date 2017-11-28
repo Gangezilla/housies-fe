@@ -2,12 +2,25 @@ import { compose, withState } from 'recompose';
 import React from 'react';
 import { withFormik, Form, Field } from 'formik';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { postInit } from '../util/helpers';
+import Button from '../Common/Button';
+import Modal from '../Common/Modal';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
   withState('notLoggedIn', 'showNotLoggedIn', false),
 );
+
+const ModalGuts = styled.div`
+  ${'' /* position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px 50px 20px 20px;
+  overflow: auto; */}
+`;
 
 const InnerForm = ({
   values,
@@ -21,95 +34,100 @@ const InnerForm = ({
   notLoggedIn,
   showReviewModal,
 }) => {
-  return [
-    <button
-      onClick={() => showReviewModal(false)}
-    >
-    XXX CLOSE ME XXX
-    </button>,
-    <Form onSubmit={handleSubmit}>
-      {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
-      {notLoggedIn && <div>Please log in then try again.</div>}
-      <label htmlFor="Title">Title</label>
-      <Field
-        name="title"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.title}
-      />
-      {touched.title && errors.title && <div>{errors.title}</div>}
-      <div>
-        <label htmlFor="1" className="">
-          <input
-            name="rating"
-            type="radio"
-            value="1"
-            checked={values.rating === '1'}
+  return (
+    <Modal>
+      <ModalGuts>
+        <Button
+          key="Button"
+          onClick={() => showReviewModal(false)}
+        >
+    X
+        </Button>
+        <Form onSubmit={handleSubmit} key="Form">
+          {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
+          {notLoggedIn && <div>Please log in then try again.</div>}
+          <label htmlFor="Title">Title</label>
+          <Field
+            name="title"
             onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.title}
           />
+          {touched.title && errors.title && <div>{errors.title}</div>}
+          <div>
+            <label htmlFor="1" className="">
+              <input
+                name="rating"
+                type="radio"
+                value="1"
+                checked={values.rating === '1'}
+                onChange={handleChange}
+              />
           1
-        </label>
-        <label htmlFor="2" className="">
-          <input
-            name="rating"
-            type="radio"
-            value="2"
-            checked={values.rating === '2'}
-            onChange={handleChange}
-          />
+            </label>
+            <label htmlFor="2" className="">
+              <input
+                name="rating"
+                type="radio"
+                value="2"
+                checked={values.rating === '2'}
+                onChange={handleChange}
+              />
           2
-        </label>
-        <label htmlFor="3" className="">
-          <input
-            name="rating"
-            type="radio"
-            value="3"
-            checked={values.rating === '3'}
-            onChange={handleChange}
-          />
+            </label>
+            <label htmlFor="3" className="">
+              <input
+                name="rating"
+                type="radio"
+                value="3"
+                checked={values.rating === '3'}
+                onChange={handleChange}
+              />
           3
-        </label>
-        <label htmlFor="4" className="">
-          <input
-            name="rating"
-            type="radio"
-            value="4"
-            checked={values.rating === '4'}
-            onChange={handleChange}
-          />
+            </label>
+            <label htmlFor="4" className="">
+              <input
+                name="rating"
+                type="radio"
+                value="4"
+                checked={values.rating === '4'}
+                onChange={handleChange}
+              />
           4
-        </label>
-        <label htmlFor="5" className="">
-          <input
-            name="rating"
-            type="radio"
-            value="5"
-            checked={values.rating === '5'}
-            onChange={handleChange}
-          />
+            </label>
+            <label htmlFor="5" className="">
+              <input
+                name="rating"
+                type="radio"
+                value="5"
+                checked={values.rating === '5'}
+                onChange={handleChange}
+              />
           5
-        </label>
-      </div>
-      <label htmlFor="description">Description</label>
-      <Field
-        name="description"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.description}
-      />
-      {touched.description && errors.description && <div>{errors.description}</div>}
-      <label htmlFor="Tips">Tips/Secrets</label>
-      <textarea
-        name="tips"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.tips}
-      />
-      <button type="submit" disabled={isSubmitting}>
+            </label>
+          </div>
+          <label htmlFor="description">Description</label>
+          <Field
+            name="description"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.description}
+          />
+          {touched.description && errors.description && <div>{errors.description}</div>}
+          <label htmlFor="Tips">Tips/Secrets</label>
+          <textarea
+            name="tips"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.tips}
+          />
+          <button type="submit" disabled={isSubmitting}>
     Submit
-      </button>
-    </Form>,
-  ];
+          </button>
+        </Form>
+      </ModalGuts>
+    </Modal>
+  );
 };
 
 const ReviewModal = withFormik({

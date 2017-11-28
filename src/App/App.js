@@ -16,11 +16,11 @@ class App extends React.Component {
     this.state = {
       isShowingReviewModal: true, // SHOULD BE FALSE, only true for testing.
       currentHome: null,
-      isShowingLoader: false,
+      isShowingLoader: true, // SHOULD BE FALSE,only true for testing.
       user: null,
       reviews: {
-        reviewCount: 1,
-        reviews: [{
+        reviewCount: 1, // 0
+        reviews: [{ // []
           reviewId: 1234,
           homeId: 'test',
           title: 'This is a short title.',
@@ -29,7 +29,7 @@ class App extends React.Component {
           tips: 'These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. ',
           firstName: 'Scott',
           lastName: 'Gangemi',
-          profilePic: 'http://plachold.it/100x100',
+          profilePic: 'http://placehold.it/100x100',
         }],
       },
       errors: [],
@@ -117,8 +117,12 @@ class App extends React.Component {
   createVisibleError(error) {
     const errors = this.state.errors.slice(0);
     const index = errors.indexOf(error);
+    const errorWithTime = Object.assign({}, {
+      description: error,
+      timestamp: Math.floor(Date.now() / 1000),
+    });
     if (index === -1) {
-      errors.push(error);
+      errors.push(errorWithTime);
       this.setState({ errors });
     }
   }
@@ -162,8 +166,8 @@ class App extends React.Component {
         createVisibleError={this.createVisibleError}
         removeVisibleError={this.removeVisibleError}
       />,
-      this.state.isShowingReviewModal &&
-      this.state.user &&
+      // this.state.isShowingReviewModal &&
+      // this.state.user &&
       <ReviewModal
         key="ReviewModal"
         currentHome={this.state.currentHome}
