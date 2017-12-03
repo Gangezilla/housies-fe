@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { postInit } from '../util/helpers';
 import Button from '../Common/Button';
 import Modal from '../Common/Modal';
+import Subheading from '../Common/Subheading';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
@@ -13,13 +14,66 @@ const enhance = compose(
 );
 
 const ModalGuts = styled.div`
-  ${'' /* position: absolute;
-  top: 0;
-  left: 0;
+  overflow: auto;
+  background: white;
+  min-height: 500px;
+  padding: 50px;  
+  position: relative;
+  max-width: 500px;
   width: 100%;
-  height: 100%;
-  padding: 20px 50px 20px 20px;
-  overflow: auto; */}
+`;
+
+const Label = styled.label`
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 5px;
+`;
+
+const FormBlock = styled.div`
+  display: block;
+  margin: 15px 0;
+`;
+
+const FitButton = Button.extend`
+  width: 100%;
+  margin-top: 50px;
+`;
+
+const Address = styled.p`
+
+`;
+
+const CloseButton = Button.extend`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`;
+
+const StyledField = styled(Field)`
+  width: 100%;
+  padding: 5px;
+  border: 1px solid rgb(216, 216, 216);
+  font-family: 'Cardo', serif;
+  font-size: 14px;
+`;
+
+const Textarea = styled.textarea`
+  padding: 5px;
+  max-width: 100%;
+  width: 100%;
+  min-width: 100%;
+  border: 1px solid rgb(216, 216, 216);
+  font-family: 'Cardo', serif;
+  font-size: 14px;
+`;
+
+const Error = styled.p`
+  color: red;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
 `;
 
 const InnerForm = ({
@@ -33,29 +87,36 @@ const InnerForm = ({
   formError,
   notLoggedIn,
   showReviewModal,
+  currentHome,
 }) => {
   return (
     <Modal>
       <ModalGuts>
-        <Button
+        <CloseButton
+          exit
           key="Button"
           onClick={() => showReviewModal(false)}
         >
     X
-        </Button>
+        </CloseButton>
+        <Subheading> Write a review </Subheading>
+        <Address>{currentHome && JSON.stringify(currentHome)}</Address>
         <Form onSubmit={handleSubmit} key="Form">
           {formError && <div>Something went wrong when submitting your review. Please try again.</div>}
           {notLoggedIn && <div>Please log in then try again.</div>}
-          <label htmlFor="Title">Title</label>
-          <Field
-            name="title"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.title}
-          />
-          {touched.title && errors.title && <div>{errors.title}</div>}
-          <div>
-            <label htmlFor="1" className="">
+          <FormBlock>
+            <Label htmlFor="Title">Title</Label>
+            <StyledField
+              name="title"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.title}
+            />
+            {touched.title && errors.title && <Error>{errors.title}</Error>}
+          </FormBlock>
+          <FormBlock>
+            <Label> Rating </Label>
+            <Label htmlFor="1" className="">
               <input
                 name="rating"
                 type="radio"
@@ -64,8 +125,8 @@ const InnerForm = ({
                 onChange={handleChange}
               />
           1
-            </label>
-            <label htmlFor="2" className="">
+            </Label>
+            <Label htmlFor="2" className="">
               <input
                 name="rating"
                 type="radio"
@@ -74,8 +135,8 @@ const InnerForm = ({
                 onChange={handleChange}
               />
           2
-            </label>
-            <label htmlFor="3" className="">
+            </Label>
+            <Label htmlFor="3" className="">
               <input
                 name="rating"
                 type="radio"
@@ -84,8 +145,8 @@ const InnerForm = ({
                 onChange={handleChange}
               />
           3
-            </label>
-            <label htmlFor="4" className="">
+            </Label>
+            <Label htmlFor="4" className="">
               <input
                 name="rating"
                 type="radio"
@@ -94,8 +155,8 @@ const InnerForm = ({
                 onChange={handleChange}
               />
           4
-            </label>
-            <label htmlFor="5" className="">
+            </Label>
+            <Label htmlFor="5" className="">
               <input
                 name="rating"
                 type="radio"
@@ -104,26 +165,31 @@ const InnerForm = ({
                 onChange={handleChange}
               />
           5
-            </label>
-          </div>
-          <label htmlFor="description">Description</label>
-          <Field
-            name="description"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.description}
-          />
-          {touched.description && errors.description && <div>{errors.description}</div>}
-          <label htmlFor="Tips">Tips/Secrets</label>
-          <textarea
-            name="tips"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.tips}
-          />
-          <button type="submit" disabled={isSubmitting}>
-    Submit
-          </button>
+            </Label>
+            {touched.rating && errors.rating && <Error>{errors.rating}</Error>}
+          </FormBlock>
+          <FormBlock>
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              name="description"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.description}
+            />
+            {touched.description && errors.description && <Error>{errors.description}</Error>}
+          </FormBlock>
+          <FormBlock>
+            <Label htmlFor="Tips">Tips/Secrets</Label>
+            <Textarea
+              name="tips"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.tips}
+            />
+          </FormBlock>
+          <FitButton type="submit" disabled={isSubmitting}>
+            Submit
+          </FitButton>
         </Form>
       </ModalGuts>
     </Modal>
@@ -137,6 +203,8 @@ const ReviewModal = withFormik({
       errors.title = 'Required';
     } else if (!values.description) {
       errors.description = 'Required';
+    } else if (!values.rating) {
+      errors.rating = 'Required';
     }
     return errors;
   },
