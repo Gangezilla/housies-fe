@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from '../Common/Button';
+import Subheading from '../Common/Subheading';
 
 // reviewId text, //
 // homeId text, // 
@@ -55,9 +56,6 @@ const Review = (review) => {
   );
 };
 
-const ReviewHeading = styled.h3`
-`;
-
 const ReviewsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -88,7 +86,7 @@ const Reviews = ({
       >
     Have you lived here before? Add another review.
       </AddReviewButton>
-      <ReviewHeading> {reviews.reviewCount} Review{reviews.reviewCount > 1 ? 's' : ''} </ReviewHeading>
+      <Subheading> {reviews.reviewCount} Review{reviews.reviewCount > 1 ? 's' : ''} </Subheading>
       <ReviewsContainer>
         {reviews.reviews.map(review => (
           Review(review)

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { getInit } from '../util/helpers';
 import Housies from './housies.png';
 import Button from '../Common/Button';
+import Heading from '../Common/Heading';
 
 const Header = ({
   user,
@@ -61,9 +62,6 @@ const Header = ({
     background-position-x: center;
     background-position-y: center;
     background-size: 55px;
-  `;
-
-  const Heading = styled.h3`
   `;
 
   return (

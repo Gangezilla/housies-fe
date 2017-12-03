@@ -1,80 +1,18 @@
 import { compose, withState } from 'recompose';
 import React from 'react';
-import { withFormik, Form, Field } from 'formik';
+import { withFormik, Form } from 'formik';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { postInit } from '../util/helpers';
-import Button from '../Common/Button';
 import Modal from '../Common/Modal';
 import Subheading from '../Common/Subheading';
+import {
+  ModalGuts, Label, FormBlock, FitButton, Address, CloseButton, StyledField, Textarea, styledError,
+} from './components';
 
 const enhance = compose(
   withState('formError', 'showFormError', false),
   withState('notLoggedIn', 'showNotLoggedIn', false),
 );
-
-const ModalGuts = styled.div`
-  overflow: auto;
-  background: white;
-  min-height: 500px;
-  padding: 50px;  
-  position: relative;
-  max-width: 500px;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  display: block;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  font-size: 14px;
-  margin-bottom: 5px;
-`;
-
-const FormBlock = styled.div`
-  display: block;
-  margin: 15px 0;
-`;
-
-const FitButton = Button.extend`
-  width: 100%;
-  margin-top: 50px;
-`;
-
-const Address = styled.p`
-
-`;
-
-const CloseButton = Button.extend`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-`;
-
-const StyledField = styled(Field)`
-  width: 100%;
-  padding: 5px;
-  border: 1px solid rgb(216, 216, 216);
-  font-family: 'Cardo', serif;
-  font-size: 14px;
-`;
-
-const Textarea = styled.textarea`
-  padding: 5px;
-  max-width: 100%;
-  width: 100%;
-  min-width: 100%;
-  border: 1px solid rgb(216, 216, 216);
-  font-family: 'Cardo', serif;
-  font-size: 14px;
-`;
-
-const Error = styled.p`
-  color: red;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-`;
 
 const InnerForm = ({
   values,
@@ -112,7 +50,7 @@ const InnerForm = ({
               onBlur={handleBlur}
               value={values.title}
             />
-            {touched.title && errors.title && <Error>{errors.title}</Error>}
+            {touched.title && errors.title && <styledError>{errors.title}</styledError>}
           </FormBlock>
           <FormBlock>
             <Label> Rating </Label>
@@ -166,7 +104,7 @@ const InnerForm = ({
               />
           5
             </Label>
-            {touched.rating && errors.rating && <Error>{errors.rating}</Error>}
+            {touched.rating && errors.rating && <styledError>{errors.rating}</styledError>}
           </FormBlock>
           <FormBlock>
             <Label htmlFor="description">Description</Label>
@@ -176,7 +114,7 @@ const InnerForm = ({
               onBlur={handleBlur}
               value={values.description}
             />
-            {touched.description && errors.description && <Error>{errors.description}</Error>}
+            {touched.description && errors.description && <styledError>{errors.description}</styledError>}
           </FormBlock>
           <FormBlock>
             <Label htmlFor="Tips">Tips/Secrets</Label>

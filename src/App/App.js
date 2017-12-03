@@ -14,7 +14,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isShowingReviewModal: true, // SHOULD BE FALSE, only true for testing.
+      isShowingReviewModal: false,
       currentHome: null,
       isShowingLoader: true, // SHOULD BE FALSE,only true for testing.
       user: null,
@@ -54,6 +54,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getUsersCurrentLocation();
+    // this.cleanUpErrors();
   }
 
   getUsersCurrentLocation() {
@@ -66,6 +67,16 @@ class App extends React.Component {
         this.setState({ currentLocation });
       });
     }
+  }
+
+  cleanUpErrors() {
+    setTimeout(() => {
+      // if (!self.isMounted()) { return; } // abandon 
+      // self.poll(); // do it once and then start it up ...
+      // self._timer = setInterval(self.poll.bind(self), 15000);
+      const timestamp = Math.round((new Date()).getTime() / 1000);
+      console.log(timestamp);
+    }, 1000);
   }
 
   retrieveLoggedInUser() {
@@ -116,12 +127,12 @@ class App extends React.Component {
 
   createVisibleError(error) {
     const errors = this.state.errors.slice(0);
-    const index = errors.indexOf(error);
-    const errorWithTime = Object.assign({}, {
-      description: error,
-      timestamp: Math.floor(Date.now() / 1000),
-    });
-    if (index === -1) {
+    const index = errors.filter(existingErrors => existingErrors.description === error);
+    if (index.length === 0) {
+      const errorWithTime = Object.assign({}, {
+        description: error,
+        timestamp: Math.floor(Date.now() / 1000),
+      });
       errors.push(errorWithTime);
       this.setState({ errors });
     }
@@ -129,14 +140,16 @@ class App extends React.Component {
 
   removeVisibleError(error) {
     const errors = this.state.errors.slice(0);
-    const index = errors.indexOf(error);
-    if (index > -1) {
+    console.log(errors);
+    const index = errors.filter(existingErrors => existingErrors.description === error);
+    if (index.length === 0) {
       errors.splice(index, 1);
       this.setState({ errors });
     }
   }
 
   render() {
+    this.cleanUpErrors();
     return [
       <Header
         key="Header"
@@ -166,8 +179,8 @@ class App extends React.Component {
         createVisibleError={this.createVisibleError}
         removeVisibleError={this.removeVisibleError}
       />,
-      // this.state.isShowingReviewModal &&
-      // this.state.user &&
+      this.state.isShowingReviewModal &&
+      this.state.user &&
       <ReviewModal
         key="ReviewModal"
         currentHome={this.state.currentHome}
@@ -191,5 +204,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// maybe you can even ping a google api or something and get a photo of the house, or just put it on a map. cool.
