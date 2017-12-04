@@ -61,7 +61,7 @@ box-sizing: border-box;
 `;
 
 export const styledError = styled.p`
-color: red;
+color: '#EA5D41';
 text-transform: uppercase;
 font-family: 'Montserrat', sans-serif;
 font-size: 10px;

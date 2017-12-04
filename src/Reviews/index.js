@@ -4,17 +4,6 @@ import styled from 'styled-components';
 import Button from '../Common/Button';
 import Subheading from '../Common/Subheading';
 
-// reviewId text, //
-// homeId text, // 
-// title text, 
-// description text,
-// rating int,
-// tips text
-// memberId text // 
-// firstName
-// lastName
-// profilePic
-
 const Review = (review) => {
   const ReviewCard = styled.div`
     width: 90%;
@@ -31,8 +20,11 @@ const Review = (review) => {
   `;
 
   const ReviewHeader = styled.h4`
+    display: block;
+    font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
-    
+    font-size: 14px;
+    margin-bottom: 5px;
   `;
 
   return (

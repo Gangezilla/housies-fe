@@ -4,22 +4,30 @@ import styled from 'styled-components';
 const ErrorContainer = styled.div`
   display: flex;
   position: fixed;
-  top: 10px;
+  bottom: ${props => props.bottom};
   right: 10px;
   transition: 0.2s;
 `;
 
 const StyledError = styled.span`
-  width: 150px;
+  max-width: 300px;
   background: #EA5D41;
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
 `;
 
-const Error = (error) => {
+const newError = (error, errors) => {
+
+  const determineBottom = () => {
+    const index = errors.map((existingError) => {
+      return existingError.description;
+    }).indexOf(error.description);
+    return `${(index * 2) + 10} px`;
+  };
+
   return (
-    <ErrorContainer key={error.description}>
+    <ErrorContainer bottom={determineBottom()} key={error.description}>
       <StyledError>{error.description}</StyledError>
     </ErrorContainer>
   );
@@ -28,10 +36,10 @@ const Error = (error) => {
 const Errors = ({
   errors,
 }) => {
-  console.log(errors);
-  return (<div>
-    {errors.map(error => Error(error))}
-  </div>
+  return (
+    <div>
+      {errors.map(error => newError(error, errors))}
+    </div>
   );
 };
 

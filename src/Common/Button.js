@@ -6,16 +6,16 @@ const Button = styled.button`
   padding: 5px 15px;
   min-height: 40px;
   min-width: 125px;
-  color: ${props => (props.exit ? 'red' : '#7ab8e3')};
+  color: ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   font-size: 14px;
-  border: 2px solid ${props => (props.exit ? 'red' : '#7ab8e3')};
+  border: 2px solid ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
 
   &:hover {
     color: white;
-    background: ${props => (props.exit ? 'red' : '#7ab8e3')};
+    background: ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   }
 `;
 

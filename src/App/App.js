@@ -127,7 +127,9 @@ class App extends React.Component {
 
   createVisibleError(error) {
     const errors = this.state.errors.slice(0);
-    const index = errors.filter(existingErrors => existingErrors.description === error);
+    const index = errors.map((existingError) => {
+      return existingError.description;
+    }).indexOf(error.description);
     if (index.length === 0) {
       const errorWithTime = Object.assign({}, {
         description: error,
@@ -141,7 +143,9 @@ class App extends React.Component {
   removeVisibleError(error) {
     const errors = this.state.errors.slice(0);
     console.log(errors);
-    const index = errors.filter(existingErrors => existingErrors.description === error);
+    const index = errors.map((existingError) => {
+      return existingError.description;
+    }).indexOf(error.description);
     if (index.length === 0) {
       errors.splice(index, 1);
       this.setState({ errors });
