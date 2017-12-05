@@ -6,6 +6,11 @@
   color: #e53935;
 }
 
+#PlacesAutocomplete__root {
+  flex-grow: 1;
+  position: relative;
+}
+
 .AddressSearch__search-input,
 .AddressSearch__search-input:focus,
 .AddressSearch__search-input:active {
@@ -15,7 +20,7 @@
   width: 100%;
   padding: 16px;
   font-size: 16px;
-  border-radius: 2px;
+  border-radius: 2px 0 0 2px;
   outline: none;
   box-sizing: border-box;
 }
@@ -27,6 +32,9 @@
   border-top: 1px solid #e6e6e6;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   border-radius: 0 0 2px 2px;
+  position: absolute;
+  width: 100%;
+  /* display: block; */
 }
 
 .AddressSearch__suggestion-item {

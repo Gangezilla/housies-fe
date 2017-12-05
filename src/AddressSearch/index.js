@@ -19,11 +19,21 @@ const Container = styled.div`
 const Form = styled.form`
   width: 90%;
   max-width: 800px;
+  display: flex;
 `;
 
-const SubmitButton = Button.extend`
-  display: block;
-  margin: 20px auto 0;
+const SubmitButton = styled.button`
+  padding: 16px;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  outline: none;
+  box-sizing: border-box;
+  border: honeydew;
+  height: 51px;
+  background: white;
+  color: #7ab8e3;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
 `;
 
 class AddressSearch extends React.Component {

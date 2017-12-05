@@ -35,9 +35,9 @@ export const Address = styled.p`
 `;
 
 export const CloseButton = Button.extend`
-position: absolute;
-top: 5px;
-right: 5px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 `;
 
 export const StyledField = styled(Field)`

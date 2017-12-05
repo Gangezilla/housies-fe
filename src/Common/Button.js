@@ -7,11 +7,12 @@ const Button = styled.button`
   min-height: 40px;
   min-width: 125px;
   color: ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
-  font-size: 14px;
+  font-size: 13px;
   border: 2px solid ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
+  font-family: 'Montserrat', sans-serif;
 
   &:hover {
     color: white;

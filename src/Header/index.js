@@ -40,7 +40,6 @@ const Header = ({
     );
   };
 
-  // background-color should transition from white to light green #87BF5E (maybe) on scroll.
   const Container = styled.div`
     display: flex;
     align-items: center;
@@ -64,13 +63,24 @@ const Header = ({
     background-size: 55px;
   `;
 
-  return (
+  const HousiesName = Heading.extend`
+    display: none;
+
+    @media (max-width: 480px) {
+      display: block;
+    }
+  `;
+
+  return [
     <Container>
       <Logo alt="Housies" />
-      <Heading> Housies </Heading>
+      <HousiesName> Housies </HousiesName>
       {avatarOrLogin(user)}
-    </Container>
-  );
+    </Container>,
+    <Container>
+      <p>The best place to learn about your new rental property</p>
+    </Container>,
+  ];
 };
 
 Header.propTypes = {
