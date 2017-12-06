@@ -42,7 +42,7 @@ class AddressSearch extends React.Component {
     this.state = {
       address: '',
       geocodeResults: null,
-      isShowingAlertBox: true,
+      isShowingAlertBox: true, // should be false!
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -150,6 +150,11 @@ class AddressSearch extends React.Component {
       margin-top: 15px;
     `;
 
+    const AlertSpan = styled.span`
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+    `;
+
     const AutocompleteItem = ({ formattedSuggestion }) => (
       <div className="AddressSearch__suggestion-item">
         <strong>{formattedSuggestion.mainText}</strong>{' '}
@@ -158,7 +163,7 @@ class AddressSearch extends React.Component {
 
     const AlertBox = () => (
       <AlertBoxContainer>
-        <span> We don‘t have any reviews for that home yet. Would you like to write our first? </span>
+        <AlertSpan> We don‘t have any reviews for that home yet. Would you like to write our first? </AlertSpan>
         <ButtonContainer>
           <Button onClick={() => this.handleAlertAction(true)}>
           Sure

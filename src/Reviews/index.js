@@ -27,22 +27,32 @@ const Review = (review) => {
     margin-bottom: 5px;
   `;
 
+  const ReviewSpan = styled.span`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+  `;
+
+  const ReviewParagraph = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+  `;
+
   return (
     <ReviewCard key={review.title}>
       <HeadingContainer>
-        <span>{review.title}</span>
-        <span>{review.rating}/5</span>
+        <ReviewSpan>{review.title}</ReviewSpan>
+        <ReviewSpan>{review.rating}/5</ReviewSpan>
       </HeadingContainer>
       <div>
         <div>
           <ReviewHeader>Description</ReviewHeader>
-          <p>{review.description}</p>
+          <ReviewParagraph>{review.description}</ReviewParagraph>
         </div>
         <div>
           <ReviewHeader>Tips</ReviewHeader>
-          <p>{review.tips}</p>
+          <ReviewParagraph>{review.tips}</ReviewParagraph>
         </div>
-        <span>{review.firstName} {review.lastName}</span>
+        <ReviewSpan>{review.firstName} {review.lastName}</ReviewSpan>
       </div>
     </ReviewCard>
   );

@@ -5,6 +5,7 @@ import { getInit } from '../util/helpers';
 import Housies from './housies.png';
 import Button from '../Common/Button';
 import Heading from '../Common/Heading';
+import Subheading from '../Common/Subheading';
 
 const Header = ({
   user,
@@ -63,6 +64,11 @@ const Header = ({
     background-size: 55px;
   `;
 
+  const Info = styled.p`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+  `;
+
   const HousiesName = Heading.extend`
     display: none;
 
@@ -78,7 +84,7 @@ const Header = ({
       {avatarOrLogin(user)}
     </Container>,
     <Container>
-      <p>The best place to learn about your new rental property</p>
+      <Info>The best place to learn about your new rental</Info>
     </Container>,
   ];
 };

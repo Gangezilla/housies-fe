@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Header from '../Header';
 import AddressSearch from '../AddressSearch';
 import ReviewModal from '../ReviewModal';
@@ -69,15 +68,14 @@ class App extends React.Component {
     }
   }
 
-  cleanUpErrors() {
-    setTimeout(() => {
-      // if (!self.isMounted()) { return; } // abandon 
-      // self.poll(); // do it once and then start it up ...
-      // self._timer = setInterval(self.poll.bind(self), 15000);
-      const timestamp = Math.round((new Date()).getTime() / 1000);
-      console.log(timestamp);
-    }, 1000);
-  }
+  // cleanUpErrors() {
+  //   setTimeout(() => {
+  //     // if (!self.isMounted()) { return; } // abandon 
+  //     // self.poll(); // do it once and then start it up ...
+  //     // self._timer = setInterval(self.poll.bind(self), 15000);
+  //     const timestamp = Math.round((new Date()).getTime() / 1000);
+  //   }, 1000);
+  // }
 
   retrieveLoggedInUser() {
     fetch('/auth/check/', getInit)
@@ -153,7 +151,6 @@ class App extends React.Component {
   }
 
   render() {
-    this.cleanUpErrors();
     return [
       <Header
         key="Header"

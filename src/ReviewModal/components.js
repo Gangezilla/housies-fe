@@ -44,7 +44,7 @@ export const StyledField = styled(Field)`
 width: 100%;
 padding: 5px;
 border: 1px solid rgb(216, 216, 216);
-font-family: 'Cardo', serif;
+font-family: 'Crimson Text', serif;
 font-size: 14px;
 box-sizing: border-box;
 `;
@@ -55,7 +55,7 @@ max-width: 100%;
 width: 100%;
 min-width: 100%;
 border: 1px solid rgb(216, 216, 216);
-font-family: 'Cardo', serif;
+font-family: 'Crimson Text', serif;
 font-size: 14px;
 box-sizing: border-box;
 `;
