@@ -23,7 +23,7 @@ const newError = (error, errors) => {
     const index = errors.map((existingError) => {
       return existingError.description;
     }).indexOf(error.description);
-    return `${(index * 2) + 10} px`;
+    return `${(index * 1) + 10}px`;
   };
 
   return (

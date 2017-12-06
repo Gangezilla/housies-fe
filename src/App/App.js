@@ -15,7 +15,7 @@ class App extends React.Component {
     this.state = {
       isShowingReviewModal: false,
       currentHome: null,
-      isShowingLoader: true, // SHOULD BE FALSE,only true for testing.
+      isShowingLoader: false,
       user: null,
       reviews: {
         reviewCount: 1, // 0
@@ -127,8 +127,8 @@ class App extends React.Component {
     const errors = this.state.errors.slice(0);
     const index = errors.map((existingError) => {
       return existingError.description;
-    }).indexOf(error.description);
-    if (index.length === 0) {
+    }).indexOf(error);
+    if (index === -1) {
       const errorWithTime = Object.assign({}, {
         description: error,
         timestamp: Math.floor(Date.now() / 1000),

@@ -34,6 +34,14 @@ const SubmitButton = styled.button`
   color: #7ab8e3;
   font-family: 'Montserrat', sans-serif;
   font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    color: white;
+    background: #7ab8e3;
+    border: #7ab8e3;
+  }
 `;
 
 class AddressSearch extends React.Component {

@@ -5,7 +5,6 @@ import { getInit } from '../util/helpers';
 import Housies from './housies.png';
 import Button from '../Common/Button';
 import Heading from '../Common/Heading';
-import Subheading from '../Common/Subheading';
 
 const Header = ({
   user,
@@ -78,12 +77,12 @@ const Header = ({
   `;
 
   return [
-    <Container>
+    <Container key="container1">
       <Logo alt="Housies" />
       <HousiesName> Housies </HousiesName>
       {avatarOrLogin(user)}
     </Container>,
-    <Container>
+    <Container key="container2">
       <Info>The best place to learn about your new rental</Info>
     </Container>,
   ];

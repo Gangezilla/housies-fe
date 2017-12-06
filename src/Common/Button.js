@@ -8,7 +8,7 @@ const Button = styled.button`
   min-width: 125px;
   color: ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   font-size: 13px;
-  border: 2px solid ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
+  border: 1px solid ${props => (props.exit ? '#EA5D41' : '#7ab8e3')};
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
