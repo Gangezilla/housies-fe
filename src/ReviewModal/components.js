@@ -36,8 +36,10 @@ export const Address = styled.p`
 
 export const CloseButton = Button.extend`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 0;
+  right: 0;
+  min-width: 40px;
+  border-radius: 0px;
 `;
 
 export const StyledField = styled(Field)`
@@ -60,8 +62,8 @@ font-size: 14px;
 box-sizing: border-box;
 `;
 
-export const styledError = styled.p`
-color: '#EA5D41';
+export const StyledError = styled.p`
+color: #EA5D41;
 text-transform: uppercase;
 font-family: 'Montserrat', sans-serif;
 font-size: 10px;

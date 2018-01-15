@@ -6,7 +6,7 @@ import { postInit } from '../util/helpers';
 import Modal from '../Common/Modal';
 import Subheading from '../Common/Subheading';
 import {
-  ModalGuts, Label, FormBlock, FitButton, Address, CloseButton, StyledField, Textarea, styledError,
+  ModalGuts, Label, FormBlock, FitButton, Address, CloseButton, StyledField, Textarea, StyledError,
 } from './components';
 
 const enhance = compose(
@@ -50,7 +50,7 @@ const InnerForm = ({
               onBlur={handleBlur}
               value={values.title}
             />
-            {touched.title && errors.title && <styledError>{errors.title}</styledError>}
+            {touched.title && errors.title && <StyledError>{errors.title}</StyledError>}
           </FormBlock>
           <FormBlock>
             <Label> Rating </Label>
@@ -104,7 +104,7 @@ const InnerForm = ({
               />
           5
             </Label>
-            {touched.rating && errors.rating && <styledError>{errors.rating}</styledError>}
+            {touched.rating && errors.rating && <StyledError>{errors.rating}</StyledError>}
           </FormBlock>
           <FormBlock>
             <Label htmlFor="description">Description</Label>
@@ -114,7 +114,7 @@ const InnerForm = ({
               onBlur={handleBlur}
               value={values.description}
             />
-            {touched.description && errors.description && <styledError>{errors.description}</styledError>}
+            {touched.description && errors.description && <StyledError>{errors.description}</StyledError>}
           </FormBlock>
           <FormBlock>
             <Label htmlFor="Tips">Tips/Secrets</Label>
@@ -194,6 +194,3 @@ ReviewModal.defaultProps = {
 };
 
 export default enhance(ReviewModal);
-
-// so we need to submit the form, if something goes wrong, tell them to try again.
-// on back end, take the data, insert it into db, and then send back success or failure.

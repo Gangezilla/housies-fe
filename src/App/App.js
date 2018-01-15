@@ -18,18 +18,20 @@ class App extends React.Component {
       isShowingLoader: false,
       user: null,
       reviews: {
-        reviewCount: 1, // 0
-        reviews: [{ // []
-          reviewId: 1234,
-          homeId: 'test',
-          title: 'This is a short title.',
-          description: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. ',
-          rating: 3,
-          tips: 'These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. ',
-          firstName: 'Scott',
-          lastName: 'Gangemi',
-          profilePic: 'http://placehold.it/100x100',
-        }],
+        reviewCount: 0,
+        reviews: [],
+        // reviewCount: 1, // 0
+        // reviews: [{ // []
+        //   reviewId: 1234,
+        //   homeId: 'test',
+        //   title: 'This is a short title.',
+        //   description: 'This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. This is a long description. ',
+        //   rating: 3,
+        //   tips: 'These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. These are some useful tips. ',
+        //   firstName: 'Scott',
+        //   lastName: 'Gangemi',
+        //   profilePic: 'http://placehold.it/100x100',
+        // }],
       },
       errors: [],
       currentLocation: {
@@ -140,7 +142,6 @@ class App extends React.Component {
 
   removeVisibleError(error) {
     const errors = this.state.errors.slice(0);
-    console.log(errors);
     const index = errors.map((existingError) => {
       return existingError.description;
     }).indexOf(error.description);
@@ -150,7 +151,21 @@ class App extends React.Component {
     }
   }
 
+  // Removing errors currently doesn't work, not sure where to put the clean up job thats not in render. Oh well.
+  cleanupErrors() {
+    const errors = this.state.errors.slice(0);
+    const acceptableAge = Math.floor(Date.now() / 1000) - 10000;
+    errors.filter((error) => {
+      return error.timestamp > acceptableAge;
+    });
+    this.setState({ errors });
+  }
+
   render() {
+    // super inefficient to do this here, but not sure where else to do it...
+    // if (this.state.errors.length > 0) {
+    //   this.cleanupErrors();
+    // }
     return [
       <Header
         key="Header"

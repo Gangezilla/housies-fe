@@ -29,7 +29,7 @@ const SubmitButton = styled.button`
   outline: none;
   box-sizing: border-box;
   border: honeydew;
-  height: 51px;
+  height: 50px;
   background: white;
   color: #7ab8e3;
   font-family: 'Montserrat', sans-serif;
@@ -50,7 +50,7 @@ class AddressSearch extends React.Component {
     this.state = {
       address: '',
       geocodeResults: null,
-      isShowingAlertBox: true, // should be false!
+      isShowingAlertBox: false,
     };
     this.handleSelect = this.handleSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -94,7 +94,7 @@ class AddressSearch extends React.Component {
     event.preventDefault();
     geocodeByAddress(this.state.address)
       .then(results => this.searchForHome(results[0]))
-      .catch(err => this.createVisibleError('Sorry, something went wrong. Can you try again?', err));
+      .catch(err => this.props.createVisibleError('Sorry, something went wrong. Can you try again?', err));
   }
 
   handleSelect(address) {
@@ -120,7 +120,6 @@ class AddressSearch extends React.Component {
     });
   }
 
-  // THIS IS GROSS, REFACTOR IT.
   handleAlertAction(choice) {
     const fbError = 'Please log in with Facebook first.';
     if (choice === true) {
@@ -135,7 +134,6 @@ class AddressSearch extends React.Component {
       this.setState({ isShowingAlertBox: false });
     }
   }
-  // THIS IS GROSS, REFACTOR IT. ^^^
 
   render() {
     const cssClasses = {

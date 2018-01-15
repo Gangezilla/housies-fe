@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <p style={{ textAlign: 'center' }}>
-        This is the footer
+        Housies
       </p>
     </FooterContainer>
   );
